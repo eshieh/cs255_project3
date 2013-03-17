@@ -180,12 +180,12 @@ public final class MITMSSLSocketFactory implements MITMSocketFactory
 	// Sign certificate
 	serverCertificate.sign(AlgorithmID.sha1WithRSAEncryption, privateKey);	
 
-	// TODO: determine new emptyPassword to add extra layer of security
+  char[] emptyPassword = {};
 
 	// Initialize new KeyStore to be sent to server
 	KeyStore serverKeyStore = KeyStore.getInstance (keyStoreType);
-	serverKeyStore.load (null, keyStorePassword);
-	serverKeyStore.setKeyEntry (alias, privateKey, keyStorePassword, new Certificate[] {serverCertificate});
+	serverKeyStore.load (null, emptyPassword);
+	serverKeyStore.setKeyEntry (alias, privateKey, emptyPassword, new Certificate[] {serverCertificate});
 
 	//System.err.println("emptyPassword: " + emptyPassword);
 	// . . .
@@ -193,7 +193,7 @@ public final class MITMSSLSocketFactory implements MITMSocketFactory
 	final KeyManagerFactory keyManagerFactory =
 	    KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
 	//keyManagerFactory.init(serverKeyStore, emptyPassword);
-	keyManagerFactory.init(serverKeyStore, keyStorePassword);
+	keyManagerFactory.init(serverKeyStore, emptyPassword);
 
 	m_sslContext = SSLContext.getInstance("SSL");
 	m_sslContext.init(keyManagerFactory.getKeyManagers(),

@@ -5,6 +5,7 @@ JAVAC           = javac
 
 JAVASRCS        = \
       mitm/BCrypt.java \
+      mitm/PasswordUtils.java \
       mitm/MITMProxyServer.java \
 			mitm/ConnectionDetails.java \
 			mitm/CopyStreamRunnable.java \
