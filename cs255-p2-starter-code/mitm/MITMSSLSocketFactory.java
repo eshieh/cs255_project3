@@ -129,7 +129,6 @@ public final class MITMSSLSocketFactory implements MITMSocketFactory
 	    
 	    this.ks = keyStore;
 	} else {
-	    System.err.println("Null keystore");
 	    keyStore = null;
 	}
 
@@ -138,8 +137,6 @@ public final class MITMSSLSocketFactory implements MITMSocketFactory
 	    System.err.println("Null keystore ks initialized");
 	}
 
-	System.err.println("ALIAS: " + alias);
-	System.err.println("PWD: " + keyStorePassword);
 
 	PrivateKey privateKey = (PrivateKey) ks.getKey (alias, keyStorePassword);
 	Certificate cert = keyStore.getCertificate (alias);
@@ -148,7 +145,6 @@ public final class MITMSSLSocketFactory implements MITMSocketFactory
 	//Principal ourDN = certificate.getIssuerX500Principal();
 	Principal ourDN = certificate.getIssuerDN();
 	
-	System.err.println("ourDN: " + ourDN.toString());
 
 	// Initialize a new certificate for the server
 
@@ -167,13 +163,11 @@ public final class MITMSSLSocketFactory implements MITMSocketFactory
 	cal.set (Calendar.SECOND, 1);
 	Date before = cal.getTime();
 	
-	System.err.println("before: " + before.toString());
 
 	serverCertificate.setValidNotBefore (before); // beginning of year
 	cal.add (Calendar.YEAR, 1); // next year
 	Date after = cal.getTime();
 
-	System.err.println("after: " + after.toString());
 
 	serverCertificate.setValidNotAfter (after);
 

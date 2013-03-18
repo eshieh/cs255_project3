@@ -14,5 +14,7 @@ public interface JSSEConstants
     public final static String DEFAULT_ALIAS = "mykey";
     public final static String DEFAULT_PWD = "foobar";
 
-    public final static String PASSWORD_FILE = "passwordFile";
+    public final static String PWD_HASH = "";
+    public final static String PWD_SALT = "";
+
 }
