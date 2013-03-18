@@ -6,6 +6,7 @@ package mitm;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.io.IOException;
 
 /**
  * Main class for the Man In The Middle SSL proxy.  Delegates the real work
@@ -65,6 +66,7 @@ public class MITMProxyServer
 
 	int timeout = 0; 
 	String filename = null;
+  boolean includedPwd = false;
 
 	try {
 	    for (int i=0; i<args.length; i++)
@@ -89,10 +91,13 @@ public class MITMProxyServer
 		    timeout = Integer.parseInt(args[++i]) * 1000;
 		} else if( args[i].equals("-pwdFile")) {
         // TODO(cs255): parse this as needed
-        
-
-        System.setProperty(JSSEConstants.PASSWORD_FILE, args[++i]); 
-		} else if (args[i].equals("-adminPort")) {
+        String pwdfile = args[++i];
+        try {
+          System.setProperty(JSSEConstants.PWD_HASH, PasswordUtils.getHash(pwdfile));
+          System.setProperty(JSSEConstants.PWD_SALT, PasswordUtils.getSalt(pwdfile));
+          includedPwd = true;
+		    } catch (IOException e) {}  
+    } else if (args[i].equals("-adminPort")) {
 			adminPort = Integer.parseInt(args[++i]);
 		} else if (args[i].equals("-outputFile")) {
 		    PrintWriter pw = new PrintWriter(new FileWriter(args[++i]), true);
@@ -110,6 +115,8 @@ public class MITMProxyServer
 	if (timeout < 0) {
 	    throw printUsage("Timeout must be non-negative");
 	}
+
+  if (includedPwd == false) throw printUsage("Must include password file");
 
 	final StringBuffer startMessage = new StringBuffer();
 

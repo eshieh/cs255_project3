@@ -55,8 +55,8 @@ class MITMAdminServer implements Runnable
 		    // TODO(cs255): authenticate the user
 
 		    boolean authenticated = false;
-        String salt = PasswordUtils.getSalt();
-        String hash = PasswordUtils.getHash();
+        String salt = System.getProperty(JSSEConstants.PWD_SALT);
+        String hash = System.getProperty(JSSEConstants.PWD_HASH);
         if(hash != BCrypt.hashpw(password, salt)) {
           authenticated = true;
         }

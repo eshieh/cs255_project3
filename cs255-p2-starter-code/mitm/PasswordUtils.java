@@ -25,21 +25,17 @@ public class PasswordUtils {
   
   }  
 
-  public static String getHash(String name) {
-    try {
-      File file = new File(name);
-      BufferedReader br = new BufferedReader(new FileReader(file));
-      return br.readLine();
-    } catch (IOException e) { return ""; }
+  public static String getHash(String name) throws IOException {
+    File file = new File(name);
+    BufferedReader br = new BufferedReader(new FileReader(file));
+    return br.readLine();
   }
 
-  public static String getSalt() {
-    try {
-      File file = new File(name);
-      BufferedReader br = new BufferedReader(new FileReader(file));
-      br.readLine();
-      return br.readLine();
-    } catch (IOException e) { return ""; }
+  public static String getSalt(String name) throws IOException {
+    File file = new File(name);
+    BufferedReader br = new BufferedReader(new FileReader(file));
+    br.readLine();
+    return br.readLine();
   
   }
 
